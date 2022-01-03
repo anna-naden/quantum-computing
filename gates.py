@@ -135,7 +135,7 @@ def phase_gate():
     return np.array([\
     [1,0],\
     [0,np.exp(complex(0,1)*np.pi/4)]])
-def identity_gate():
-    return np.eye(2)
+def identity_gate(dim=1):
+    return np.eye(2**dim)
 
 

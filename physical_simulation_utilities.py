@@ -40,7 +40,7 @@ def same_state(state1,state2):
         return False
     phase_factor = state2[index]/state1[index]
     for index, amp in enumerate(state1):
-        if state2[index] != phase_factor*state1[index]:
+        if np.round(state2[index],9) != np.round(phase_factor*state1[index],9):
             return False
     return True
 def inner_product(psi1,psi2):
@@ -78,12 +78,20 @@ def state_sign_mask(dim,state, title=None):
 def sign_mask(dim,state, title=None):
     str1 = list('                                ')
     for j in range(2**dim):
-        if state[j]==0:
+        if np.real(state[j])==0:
             str1[j]='0'
-        elif state[j]>0:
+        elif np.real(state[j])>0:
             str1[j]='+'
         else:
             str1[j]='-'
+    str2 = list('                                ')
+    for j in range(2**dim):
+        if np.imag(state[j])==0:
+            str2[j]='0'
+        elif np.image(state[j])>0:
+            str2[j]='+'
+        else:
+            str2[j]='-'
     return "".join(str1)
 def display_state(state):
     dim =get_log2(len(state))
@@ -98,26 +106,6 @@ def initial_state(dim,qubit):
 def state_norm(state):
     n=np.dot(np.conj(state),state)
     return np.sqrt(n)
-def measure_qubit(qubit, state):
-    dim = get_log2(len(state))
-    m = measurement_operator0(dim,qubit)
-    state0 = np.matmul(m,state)
-    if state_norm(state0)==0:
-        state0=None
-        prob0=0
-    else:
-        prob0=state_norm(state0)**2
-        state0 /= state_norm(state0)
-    
-    m = measurement_operator1(dim,qubit)
-    state1 = np.matmul(m,state)
-    if state_norm(state1)==0:
-        state1=None
-        prob1=0
-    else:
-        prob1=state_norm(state1)**2
-        state1 /= state_norm(state1)
-    return [[prob0,state0],[prob1,state1]]
 def get_counts(state):
     dim = get_log2(len(state))
     counts=[]
@@ -134,7 +122,6 @@ def get_counts(state):
             state2 /n
         string = bin(i)[2:]
         string = string.rjust(dim,'0')
-        # string = string[::-1]
         counts.append([p,string])
     return counts
 def count_to_bits(count):
@@ -149,5 +136,7 @@ def n_particle_state(gate, num_particles):
     return linalg.kron(np.eye(2**(num_particles-1)),gate)[:,0]
 def one_particle_state(gate):
     return gate[:,0]
+def dagger(m):
+    return np.transpose(np.conj(m))
 
 

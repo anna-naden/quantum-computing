@@ -1,14 +1,17 @@
 import numpy as np
 from scipy import linalg
-from physical_simulation_utilities import inner_product, get_log2
+from physical_simulation_utilities import inner_product, get_log2, state_sign_mask, visualize
 from gates import x_gate, y_gate, z_gate, make_bell,  entangle_gate
 def quantum_repeater(state):
     dim=get_log2(len(state))
 
     e = entangle_gate(2,0,1,1,1)
     g=linalg.kron(np.eye(4),linalg.kron(e,np.eye(2)))
+    visualize(g,'first entangle')
     g2=linalg.kron(e,np.eye(8))
+    print(state_sign_mask(dim,state, 'initial'))
     state = np.matmul(g,state)
+    print(state_sign_mask(dim, state, 'after first entangle'))
     state = np.matmul(g2,state)
     xgate = linalg.kron(x_gate(),np.eye(2**(dim-1)))
     # print(state_sign_mask(dim,psi))
