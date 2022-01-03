@@ -1,7 +1,7 @@
 import numpy as np
 # from scipy import linalg
 # import scipy
-from new_physical_processes_density_matrix import teleport, quantum_repeater
+from physical_processes_density_matrix import teleport, quantum_repeater
 from density import get_state, partial_trace
 from physical_simulation_utilities import same_state, n_particle_state, \
     one_particle_state
