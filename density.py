@@ -2,14 +2,26 @@ import numpy as np
 from physical_simulation_utilities import dagger, state_sign_mask, get_log2
 def partial_trace(rho,n,m):
     """
-    n=#qubits to trace over
-    m=#untraced qubits
+    Partial trace over first subsystem
+    n=#qubits in first subsyste
+    m=# qubits in second subsystem
     n+m=dim
     
     """
     n=2**n
     m=2**m
     return np.trace(rho.reshape(n,m,n,m), axis1=0, axis2=2)
+def partial_trace_second_subsystem(rho,n,m):
+    """
+    Partial trace over second subsystem
+    n=#qubits in first subsyste
+    m=# qubits in second subsystem
+    n+m=dim
+    """
+    n=2**n
+    m=2**m
+    return np.trace(rho.reshape(n,m,n,m), axis1=1, axis2=3)
+    
 def update(rho, u):
     return np.matmul(u,np.matmul(rho,dagger(u)))
 def ispure(rho):

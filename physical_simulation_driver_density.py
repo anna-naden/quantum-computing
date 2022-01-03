@@ -1,7 +1,7 @@
 import numpy as np
 # from scipy import linalg
 # import scipy
-from physical_processes_density_matrix import teleport, quantum_repeater
+from new_physical_processes_density_matrix import teleport, quantum_repeater
 from density import get_state, partial_trace
 from physical_simulation_utilities import same_state, n_particle_state, \
     one_particle_state
@@ -19,5 +19,4 @@ for [process, num_particles] in processes:
         for final_state in process(initial_state):
             n=num_particles-1 #number of qubits to trace
             m=1 # number of qubits to keep
-            x=partial_trace(final_state, n,m)
-            assert same_state(get_state(x), one_particle_state(gate))
+            assert same_state(get_state(final_state), one_particle_state(gate))
