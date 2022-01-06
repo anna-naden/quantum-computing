@@ -57,7 +57,7 @@ for initial_state in [basis(2,0), basis(2,1)]:
             for [p, state] in zip(probs, states):
                 if p>0:
                     
-                    # Depending on the measurement outcome, Bob applies a gate to his particle
+                    # Depending on the measurement outcome, the receiving state applies a gate to the link qubit.
                     if i1==0:
                         if i2 == 0:
                             gate = None
