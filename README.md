@@ -9,3 +9,7 @@ Simulates and demonstrates entanglement swapping
 Function same_state() returns True if both arguments represent the same state (up to a phase factor)
 ## physical-simulation-requirements.lst
 I use numpy version 1.18 because the latest version is incompatible with qutip
+## qnet_teleportation.py
+Using the qalgebra system to demonstration teleportation using computer algebra rather than numerical calculation.
+## qnet_requirements.lst
+The pip requirements for usign qabebra and qnet
