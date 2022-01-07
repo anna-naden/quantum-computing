@@ -1,4 +1,10 @@
 # Teleportation and a Quantum Repeater Using Entanglement Swapping
+## qnet_teleportation.py
+Using the qalgebra system to demonstration teleportation using computer algebra rather than numerical calculation.
+## qalgebra_entanglement_swapping.py
+Like in a quantum repeater, using computer algebra rather than multiplying matrices of numbers
+## qnet_requirements.lst
+The pip requirements for usign qabebra and qnet
 ## qutip_teleportation.py
 Simulates and demonstrates teleportation
 ## qutip_teleportation_nondeterministic
@@ -9,7 +15,3 @@ Simulates and demonstrates entanglement swapping
 Function same_state() returns True if both arguments represent the same state (up to a phase factor)
 ## physical-simulation-requirements.lst
 I use numpy version 1.18 because the latest version is incompatible with qutip
-## qnet_teleportation.py
-Using the qalgebra system to demonstration teleportation using computer algebra rather than numerical calculation.
-## qnet_requirements.lst
-The pip requirements for usign qabebra and qnet
