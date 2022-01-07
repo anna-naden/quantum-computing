@@ -42,6 +42,9 @@ def proj(state):
     return (state * state.dag()).expand()
 
 initial_state = (hs[0].basis_state(0)+hs[0].basis_state(1))/sp.sqrt(2) # fist one in the loop
+expected_final = (hs[2].basis_state(0)+hs[2].basis_state(1))/sp.sqrt(2)
+dm_expected_final = proj(expected_final)
+
 # initial_state = hs[0].basis_state(1)  # fist one in the loop
 q = initial_state * hs[1].basis_state(0) * hs[2].basis_state(0)
 x1 = sigmax(hs[1])
@@ -76,7 +79,7 @@ def do_loop():
         elif i==2:
             dm = sigmaz(hs[2]).dag()*dm*sigmaz(hs[2])
         result.append(dm)
-        print(dm)
+        assert (dm_expected_final/4).expand_in_basis()==dm.expand_in_basis()
     return result
 
 result=do_loop()
