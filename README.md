@@ -1,6 +1,8 @@
 # Teleportation and a Quantum Repeater Using Entanglement Swapping
 ## qnet_teleportation.py
 Using the qalgebra system to demonstration teleportation using computer algebra rather than numerical calculation.
+## ent_swap_algebra.py
+Use symbolic computation (computer algebra) to determine which gates to apply in qalgebra_entanglement_swapping.py
 ## qalgebra_entanglement_swapping.py
 Like in a quantum repeater, using computer algebra rather than multiplying matrices of numbers
 ## qnet_requirements.lst
