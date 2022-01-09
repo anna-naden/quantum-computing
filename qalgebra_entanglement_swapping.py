@@ -2,6 +2,8 @@ import qalgebra as qa
 from sympy import sqrt
 import sympy as sp
 import numpy as np
+from qalgebra import convert_to_sympy_matrix
+
 hs = [qa.LocalSpace(i, dimension=2) for i in range(5)]
 def hadamard_transform(hs):
     return (
@@ -49,11 +51,14 @@ def bell_state(state, hs):
 def proj(state):
     return (state * state.dag()).expand()
 
-# Put the data qubit in a Hadamard state
-initial_state = (hs[0].basis_state(0)+hs[0].basis_state(1))/sp.sqrt(2)
+show_intermediate = False
+
+# Put the data qubit in a general superposition
+a, b = sp.symbols('a,b')
+initial_state = a*hs[0].basis_state(0)+b*hs[0].basis_state(1)
 
 # The repeated data qubit
-expected_final = (hs[4].basis_state(0)+hs[4].basis_state(1))/sp.sqrt(2)
+expected_final = a*hs[4].basis_state(0)+b*hs[4].basis_state(1)
 dm_expected_final = proj(expected_final)
 
 # The combination of the data qubit, the link qubits and the repeated qubit
@@ -106,6 +111,15 @@ for i1, psi1 in enumerate([phi_plus, phi_minus, psi_plus, psi_minus]):
         dm = qa.OperatorTrace(dm, over_space=hs[1])
         dm = qa.OperatorTrace(dm, over_space=hs[2])
         dm = qa.OperatorTrace(dm, over_space=hs[3])
+        dm_sympy = convert_to_sympy_matrix(dm.doit())
+        
+        if show_intermediate:
+            triples = dm_sympy.eigenvects()
+            for i, triple in enumerate(triples):
+                eval1, mult, evecs = triple
+                if eval1 != 0:
+                    assert len(evecs)==1
+                    print(f'{i1} {i2} {evecs[0]}' )
                     
         # Depending on the measurement outcome, the receiver applies a gate to the link qubit.
         if i1==0:
@@ -147,6 +161,8 @@ for i1, psi1 in enumerate([phi_plus, phi_minus, psi_plus, psi_minus]):
                 gate = None
         if gate is not None:
             dm = gate.dag() * dm * gate
-
+        x = dm_expected_final/16
+        x = x.expand_in_basis()
+        y = dm.expand_in_basis()
         # Verify the the reconstructed qubit matches what was transmitted
-        assert (dm_expected_final/16).expand_in_basis()==dm.expand_in_basis()
+        print (x==y)
