@@ -51,6 +51,18 @@ def bell_state(state, hs):
 def proj(state):
     return (state * state.dag()).expand()
 
+def get_state_from_pure_dm(dm, factor=None):
+    dm_sympy = convert_to_sympy_matrix(dm.doit())
+    triples = dm_sympy.eigenvects()
+    for i, triple in enumerate(triples):
+        eval1, mult, evecs = triple
+        if eval1 != 0:
+            assert len(evecs)==1
+            x = evecs[0][:]
+            if factor is not None:
+                x = (factor*evecs[0])[:]
+            return x
+
 show_intermediate = False
 
 # Put the data qubit in a general superposition
@@ -111,9 +123,9 @@ for i1, psi1 in enumerate([phi_plus, phi_minus, psi_plus, psi_minus]):
         dm = qa.OperatorTrace(dm, over_space=hs[1])
         dm = qa.OperatorTrace(dm, over_space=hs[2])
         dm = qa.OperatorTrace(dm, over_space=hs[3])
-        dm_sympy = convert_to_sympy_matrix(dm.doit())
         
         if show_intermediate:
+            dm_sympy = convert_to_sympy_matrix(dm.doit())
             triples = dm_sympy.eigenvects()
             for i, triple in enumerate(triples):
                 eval1, mult, evecs = triple
@@ -161,8 +173,9 @@ for i1, psi1 in enumerate([phi_plus, phi_minus, psi_plus, psi_minus]):
                 gate = None
         if gate is not None:
             dm = gate.dag() * dm * gate
+        print(f'{i1} {i2} {get_state_from_pure_dm(b*dm,b)}')
         x = dm_expected_final/16
         x = x.expand_in_basis()
         y = dm.expand_in_basis()
         # Verify the the reconstructed qubit matches what was transmitted
-        print (x==y)
+        assert (x==y)
