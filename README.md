@@ -17,3 +17,5 @@ Simulates and demonstrates entanglement swapping
 Function same_state() returns True if both arguments represent the same state (up to a phase factor)
 ## physical-simulation-requirements.lst
 I use numpy version 1.18 because the latest version is incompatible with qutip
+## entanglement_sympy.ipynb
+Telepeortation and quantum repeaters using entanglment. Jupyter notebook. Stands alone except for dependency on numpy, scipy and sympy.
