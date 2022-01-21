@@ -1,4 +1,6 @@
 # Teleportation and a Quantum Repeater Using Entanglement Swapping
+## entanglement-qutip.ipynb
+Teleportation and entanglement swapping using the Quantum Toolkit in Python (QuTiP) (YouTube video at https://youtu.be/M7GUkuM2vBk
 ## qnet_teleportation.py
 Using the qalgebra system to demonstration teleportation using computer algebra rather than numerical calculation.
 ## ent_swap_algebra.py
